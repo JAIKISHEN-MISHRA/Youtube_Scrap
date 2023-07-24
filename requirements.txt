@@ -1,0 +1,4 @@
+Flask==2.3.2
+flask_cors==4.0.0
+pymongo==4.4.1
+selenium==4.10.0
