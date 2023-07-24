@@ -62,7 +62,7 @@ def result():
             client = pymongo.MongoClient("mongodb+srv://Jaimishra20031:Jai31072003@jaicluster.xau2qru.mongodb.net/")  # Replace with your connection string
             db = client['Youtube_Scrap']
             Youtube_col = db['Youtube_Col']
-            Youtube_col.insert_many(YouTube_Data)  # Corrected the variable name
+            Youtube_col.insert_many(YouTube_Data)  
 
             # Extracting and returning the selected data based on button value
             if request.form["button"] == "Video_Link":
