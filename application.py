@@ -4,7 +4,7 @@ from flask import Flask, render_template, request
 from flask_cors import CORS, cross_origin
 import pymongo
 
-applicaiton = Flask(__name__)
+applicaton = Flask(__name__)
 app=applicaiton
 
 @app.route("/", methods=['GET'])
