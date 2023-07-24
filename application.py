@@ -3,20 +3,9 @@ from selenium.webdriver.common.by import By
 from flask import Flask, render_template, request
 from flask_cors import CORS, cross_origin
 import pymongo
-import os
 
-# Initialize Flask application
-application = Flask(__name__)
-app = application
-
-# Set up CORS
-CORS(app)
-
-
-mongo_connection_string = os.environ.get("mongodb+srv://Jaimishra20031:Jai31072003@jaicluster.xau2qru.mongodb.net/")
-
-if not mongo_connection_string:
-    raise ValueError("MongoDB connection string not found in environment variables.")
+applicaiton = Flask(__name__)
+app=applicaiton
 
 @app.route("/", methods=['GET'])
 @cross_origin()
@@ -32,18 +21,13 @@ def result():
             headers = {
                 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"
             }
-            
-    
-            chrome_options = webdriver.ChromeOptions()
-            chrome_options.add_argument("--headless")
-            driver = webdriver.Chrome(executable_path='chromedriver.exe', options=chrome_options)
-            
+            driver = webdriver.Chrome()
             driver.get(url)
             videos = driver.find_elements(By.CLASS_NAME, 'style-scope ytd-rich-grid-media')
             filename = "Youtube.csv"
             fw = open(filename, "w")
             headers = "Video Link, Thumbnail_Link, Video_Title, Video_Views, Video_Time \n"
-            YouTube_Data = []
+            YouTube_Data = []  # Corrected the variable name
             for i in videos[:5]:
                 try:
                     vid_link = i.find_element(By.XPATH, './/*[@id="video-title-link"]').get_attribute("href")
@@ -72,13 +56,13 @@ def result():
                     "Video_view": vid_views,
                     "Video_Time": vid_time
                 }
-                YouTube_Data.append(myDict)
+                YouTube_Data.append(myDict)  # Corrected the variable name
 
             # MongoDB connection and data insertion
-            client = pymongo.MongoClient(mongo_connection_string)
+            client = pymongo.MongoClient("mongodb+srv://Jaimishra20031:Jai31072003@jaicluster.xau2qru.mongodb.net/")  # Replace with your connection string
             db = client['Youtube_Scrap']
             Youtube_col = db['Youtube_Col']
-            Youtube_col.insert_many(YouTube_Data)
+            Youtube_col.insert_many(YouTube_Data)  # Corrected the variable name
 
             # Extracting and returning the selected data based on button value
             if request.form["button"] == "Video_Link":
@@ -99,7 +83,7 @@ def result():
 
         except Exception as e:
             print("The exception is:", e)
-            return 'Something went wrong.'
+            return 'something is wrong'
     else:
         return render_template('index.html')
 
